@@ -28,7 +28,7 @@ body {
   box-sizing: border-box; 
   text-align: left;
   position: relative;
-  margin-top: 100px; /* Move up */
+  margin-top: 140px; /* Move up */
   margin-bottom: 150px; /* Move down */
   opacity: 1; /* Default opacity */
   transition: opacity 0.2s ease; /* Smooth fading */
@@ -77,12 +77,6 @@ body {
   text-align: center;
   margin-left: 0;
   margin-right: 0;
-}
-
-@media (max-width: 768px) {
-  #service-detail {
-    margin-top: 40px;
-  }
 }
 
 #service-detail h1,
@@ -257,7 +251,7 @@ header a {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(10); /* Drops into place */
-    
+
   }
 
   /* 🔹 Nav list layout */
