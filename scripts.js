@@ -1,78 +1,84 @@
-// Smooth fade-in for sections on scroll
+// 🔹 Smooth fade-in for sections on scroll
 document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('section');
 
   const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-          }
-      });
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
   }, {
-      threshold: 0.2,
+    threshold: 0.2,
   });
 
   sections.forEach((section) => observer.observe(section));
 });
 
-// Form submission alert
-document.getElementById('contact-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-  alert('Thank you for reaching out! We will get back to you soon.');
-  this.reset();
-});
+// 🔹 Form submission alert (only if contact form exists)
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    alert('Thank you for reaching out! We will get back to you soon.');
+    this.reset();
+  });
+}
 
+// 🔹 Fade out intro on scroll (if intro section exists)
 document.addEventListener('scroll', () => {
   const introContainer = document.querySelector('.intro-container');
-  const scrollPosition = window.scrollY;
-  const fadeStart = 0; // Start fading out
-  const fadeEnd = 50; // Fully faded out by this scroll position
+  if (introContainer) {
+    const scrollPosition = window.scrollY;
+    const fadeStart = 0;
+    const fadeEnd = 50;
 
-  // Calculate the opacity based on scroll position
-  const opacity = 1 - Math.min((scrollPosition - fadeStart) / (fadeEnd - fadeStart), 1);
-  introContainer.style.opacity = opacity > 0 ? opacity : 0; // Ensure it doesn't go below 0
-});
-
-// Hiding the Header
-document.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  const aboutSection = document.querySelector('#about');
-  const offset = 120; // Pixels before reaching the section
-  const sectionTop = aboutSection.getBoundingClientRect().top;
-
-  // Hide the header when approaching the "About Us" section
-  if (sectionTop <= offset) {
-      header.classList.add('hide-header'); // Hide the header
-  } else {
-      header.classList.remove('hide-header'); // Show the header
+    const opacity = 1 - Math.min((scrollPosition - fadeStart) / (fadeEnd - fadeStart), 1);
+    introContainer.style.opacity = Math.max(opacity, 0);
   }
 });
 
-let lastScrollTop = 0;
+// 🔹 Smart hide/show header based on scroll and About section position
 const header = document.querySelector('header');
+const aboutSection = document.querySelector('#about');
 
-window.addEventListener('scroll', () => {
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+document.addEventListener('scroll', () => {
+  if (header && aboutSection) {
+    const offset = 120;
+    const sectionTop = aboutSection.getBoundingClientRect().top;
 
-  if (Math.abs(scrollTop - lastScrollTop) > 50) {
-    if (scrollTop > lastScrollTop) {
+    if (sectionTop <= offset) {
       header.classList.add('hide-header');
     } else {
       header.classList.remove('hide-header');
     }
   }
-
-  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
 
-// Hamburger Icon
-document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.getElementById("menu-toggle");
-  const nav = document.getElementById("main-nav");
+// 🔹 Hide header when scrolling down fast, show when scrolling up
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+  if (Math.abs(scrollTop - lastScrollTop) > 50) {
+    if (scrollTop > lastScrollTop) {
+      header?.classList.add('hide-header');
+    } else {
+      header?.classList.remove('hide-header');
+    }
+  }
+
+  lastScrollTop = Math.max(scrollTop, 0);
+});
+
+// 🔹 Hamburger menu toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('main-nav');
 
   if (toggle && nav) {
-    toggle.addEventListener("click", () => {
-      nav.classList.toggle("active");
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
     });
   }
 });
