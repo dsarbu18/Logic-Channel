@@ -197,11 +197,13 @@ header a {
     pointer-events: none;
     transform: translateX(-50%) translateY(-10px); /* Slight lift */
     transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
   }
 
   /* 🔹 Shown when nav is active (after clicking hamburger) */
   #main-nav.active {
     display: flex;
+    position: absolute;
     top: 100%;                    /* Directly below the header */
     left: 50%;                    /* Start at center */
     transform: translateX(-50%);  /* Center it horizontally */
@@ -209,7 +211,7 @@ header a {
     justify-content: center;
     gap: 1.5rem;
     padding: 0.5rem 1rem;
-    margin-top: 100px;
+    margin-top: 2rem;
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
