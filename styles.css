@@ -197,13 +197,11 @@ header a {
     pointer-events: none;
     transform: translateX(-50%) translateY(-10px); /* Slight lift */
     transition: opacity 0.3s ease, transform 0.3s ease;
-    position: absolute;
   }
 
   /* 🔹 Shown when nav is active (after clicking hamburger) */
   #main-nav.active {
     display: flex;
-    position: absolute;
     top: 100%;                    /* Directly below the header */
     left: 50%;                    /* Start at center */
     transform: translateX(-50%);  /* Center it horizontally */
