@@ -63,6 +63,35 @@ body {
   background: #005bb5; /* Darker blue on hover */
 }
 
+/* Style for #service-detail section to match the About section */
+#service-detail {
+  background-color: #fff;
+  padding: 4rem 1.5rem;
+  margin-top: 120px;
+  margin-bottom: 120px;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100vw;              /* Full viewport width */
+  max-width: none;           /* Remove restriction */
+  box-sizing: border-box;
+  text-align: center;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#service-detail h1,
+#service-detail h2 {
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+#service-detail p,
+#service-detail li {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.8;
+}
+
 /* Header */
 header {
   background-color: rgba(0, 120, 215, 0.2); /* Semi-transparent blue background */
