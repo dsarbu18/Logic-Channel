@@ -257,6 +257,7 @@ header a {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(10); /* Drops into place */
+    
   }
 
   /* 🔹 Nav list layout */
