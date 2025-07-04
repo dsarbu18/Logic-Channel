@@ -72,13 +72,14 @@ window.addEventListener('scroll', () => {
 });
 
 // 🔹 Hamburger menu toggle
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('main-nav');
+document.addEventListener("DOMContentLoaded", function () {
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("main-nav");
 
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      toggle.classList.toggle("open");
     });
   }
 });
