@@ -15,7 +15,6 @@ body {
   width: 100%; /* Full width for small screens */
   max-width: 1200px; /* Limit the width on larger screens */
   margin: 0 auto; /* Center the container horizontally */
-  padding: 0 15px; /* Add horizontal padding to avoid edge overflow */
   box-sizing: border-box; /* Include padding in the total width */
   text-align: center;
 }
@@ -160,13 +159,14 @@ header a {
 
 @media (max-width: 768px) { /* For tablets and smaller devices */
   .logo {
-      max-width: 100px; /* Reduce size further on smaller screens */
+      max-width: 150px; /* Reduce size further on smaller screens */
   }
 }
 
 @media (max-width: 480px) { /* For phones */
   .logo {
-      max-width: 80px;
+      max-width: 120px;
+      margin-left: -20px; /* Hard-coded idk if i should keep it */
   }
 }
 
@@ -212,6 +212,7 @@ header a {
     right: 1.5rem;
     z-index: 1001;
     flex-direction: column;
+    margin-right: -20px;
     gap: 5px; /* Space between bars */
   }
 
@@ -381,6 +382,7 @@ header a {
     margin-top: 120px; /* or adjust as needed */
   }
 }
+
 /* Section */
 section {
   padding: 3rem 2rem;
@@ -473,5 +475,13 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem 0;
+}
+
+.anniversary-badge {
+  max-height: 60px;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
