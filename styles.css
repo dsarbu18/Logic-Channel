@@ -503,6 +503,7 @@ footer {
 
 body.maintenance {
   background-color: white !important;
+  background-image: none;
 }
 
 body.maintenance .maintenance-wrapper {
