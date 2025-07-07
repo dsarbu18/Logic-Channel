@@ -501,27 +501,28 @@ footer {
 
 
 
+body.maintenance {
+  background-color: white !important;
+}
 
-/* 🔧 Maintenance Page Styles */
-.maintenance-wrapper {
+body.maintenance .maintenance-wrapper {
+  background: none;
+  color: #333;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #0a2a66, #1e90ff);
-  color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.maintenance-wrapper h1 {
+body.maintenance h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
-.maintenance-wrapper p {
+body.maintenance p {
   font-size: 1.25rem;
   max-width: 600px;
   line-height: 1.6;
