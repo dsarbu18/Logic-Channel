@@ -136,6 +136,7 @@ header li {
 }
 
 header a {
+  position: relative;
   display: inline-block;
   color: #fff;
   text-decoration: none;
@@ -143,6 +144,24 @@ header a {
   padding: 0.5rem 1rem;
   font-size: 1.2rem;
   transition: color 0.3s ease;
+}
+
+header a:not(.logo-link)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3.5px; /* Slightly thicker line */
+  background-color: white;
+  transition: width 0.3s ease, left 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px; /* or more for more rounding */
+}
+
+header a:not(.logo-link):hover::after {
+  width: 80%;
+  left: 50%;
 }
 
 
