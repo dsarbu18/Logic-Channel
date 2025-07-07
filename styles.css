@@ -498,3 +498,32 @@ footer {
   margin-right: auto;
 }
 
+
+
+
+
+/* 🔧 Maintenance Page Styles */
+.maintenance-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #0a2a66, #1e90ff); /* Blue gradient */
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.maintenance-wrapper h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.maintenance-wrapper p {
+  font-size: 1.25rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
