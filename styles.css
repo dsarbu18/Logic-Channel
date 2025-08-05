@@ -488,6 +488,46 @@ section {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhance shadow */
 }
 
+
+
+
+/* Client Logo Banner */
+.client-banner {
+  background-color: #ffffff;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.client-heading {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.client-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px; /* Adjust spacing between logos */
+  padding: 0 1rem; /* Optional horizontal padding */
+}
+
+.client-logos img {
+  max-height: 50px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.client-logos img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+
+
+
+
 /* Ensure body takes full height */
 html, body {
   height: 100%;
