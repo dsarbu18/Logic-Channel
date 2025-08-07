@@ -86,22 +86,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const originalSlides = Array.from(track.children);
+  const originals = Array.from(track.children);
 
-  // Clone all slides to enable seamless loop
-  originalSlides.forEach(slide => {
-    const clone = slide.cloneNode(true);
-    track.appendChild(clone);
+  // Clone all slides once for a seamless loop
+  originals.forEach(slide => {
+    track.appendChild(slide.cloneNode(true));
   });
 
+  const slides = Array.from(track.children);
   let index = 0;
-  let slides = Array.from(track.children);
-  const interval = 3000;
+  const intervalTime = 3000;
 
-  function centerSlide() {
-    const slide = slides[index];
+  function goToSlide(i) {
+    const slide = slides[i];
     const slideWidth = slide.offsetWidth;
     const containerWidth = track.parentElement.offsetWidth;
     const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
@@ -112,20 +112,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function nextSlide() {
     index++;
-    centerSlide();
+    goToSlide(index);
 
-    // Reset when we pass the midpoint (original + clones)
     setTimeout(() => {
-      if (index >= slides.length - originalSlides.length) {
+      if (index >= originals.length) {  // reached the start of clones
         track.style.transition = 'none';
         index = 0;
-        centerSlide();
+        goToSlide(index);
       }
     }, 500);
   }
 
-  // Start carousel
-  setTimeout(centerSlide, 100);
-  setInterval(nextSlide, interval);
+  setTimeout(() => goToSlide(index), 100);
+  setInterval(nextSlide, intervalTime);
 });
-
