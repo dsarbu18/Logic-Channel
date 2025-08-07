@@ -618,7 +618,7 @@ section {
   max-height: 50px;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  margin: 0 auto;
+  margin: 0 20px;
   flex-shrink: 0;
 }
 
