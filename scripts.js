@@ -86,22 +86,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
+  const originalSlides = Array.from(track.children);
+
+  // Clone all slides to enable seamless loop
+  originalSlides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    track.appendChild(clone);
+  });
+
+  let index = 0;
   let slides = Array.from(track.children);
+  const interval = 3000;
 
-  // Clone first and last slide
-  const firstClone = slides[0].cloneNode(true);
-  const lastClone = slides[slides.length - 1].cloneNode(true);
-  track.appendChild(firstClone);
-  track.insertBefore(lastClone, slides[0]);
-
-  slides = Array.from(track.children);
-  let index = 1;
-
-  // Center the slide
   function centerSlide() {
     const slide = slides[index];
     const slideWidth = slide.offsetWidth;
@@ -112,20 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Initial position
-  setTimeout(centerSlide, 100);
-
-  // Auto-slide
-  setInterval(() => {
+  function nextSlide() {
     index++;
     centerSlide();
 
+    // Reset when we pass the midpoint (original + clones)
     setTimeout(() => {
-      if (index >= slides.length - 1) {
+      if (index >= slides.length - originalSlides.length) {
         track.style.transition = 'none';
-        index = 1;
+        index = 0;
         centerSlide();
       }
     }, 500);
-  }, 3000);
+  }
+
+  // Start carousel
+  setTimeout(centerSlide, 100);
+  setInterval(nextSlide, interval);
 });
+
