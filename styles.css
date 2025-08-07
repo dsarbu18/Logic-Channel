@@ -600,54 +600,38 @@ section {
 
 
 
-.client-logos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 40px; /* Adjust spacing between logos */
-  padding: 0 1rem; /* Optional horizontal padding */
-}
-
-.client-logos img {
-  max-height: 60px;
-  opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.client-logos img:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
 
 
 
-
-
-/* Carousel for mobile */
 .client-carousel {
   display: none;
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
+  max-width: 150px;
   margin: 0 auto;
-  text-align: center;
   position: relative;
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
   align-items: center;
+  justify-content: flex-start;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  flex: 0 0 auto;
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .client-carousel img {
   max-height: 50px;
-  opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  margin: 0 20px;
   flex-shrink: 0;
+  opacity: 0.7;
+  margin: 0 20px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .client-carousel img:hover {
