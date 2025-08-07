@@ -91,50 +91,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const originalSlides = Array.from(track.children);
-  const totalOriginal = originalSlides.length;
 
-  // Clone all slides and append them
-  originalSlides.forEach(slide => {
-    const clone = slide.cloneNode(true);
-    track.appendChild(clone);
-  });
-
-  const allSlides = Array.from(track.children);
-  let index = 0;
-
-  function centerSlide() {
-    const slide = allSlides[index];
-    const slideWidth = slide.offsetWidth;
+  function centerFirstSlide() {
+    const firstSlide = track.children[0];
+    const slideWidth = firstSlide.offsetWidth;
     const containerWidth = track.parentElement.offsetWidth;
-    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
+    const offset = firstSlide.offsetLeft - (containerWidth - slideWidth) / 2;
 
     track.style.transition = 'transform 0.5s ease-in-out';
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  function nextSlide() {
-    index++;
-    centerSlide();
+  function rotateQueue() {
+    // Animate to center first slide
+    centerFirstSlide();
 
-    // When we've reached the last real + clone slide, reset to index 0
+    // After transition ends, move first slide to the end and reset position
     setTimeout(() => {
-      if (index >= totalOriginal) {
-        track.style.transition = 'none';
-        index = 0;
-        centerSlide();
+      const firstSlide = track.children[0];
+      track.appendChild(firstSlide);
 
-        // Re-enable transition for the next move
-        setTimeout(() => {
-          track.style.transition = 'transform 0.5s ease-in-out';
-        }, 50);
-      }
-    }, 550);
+      // Instantly reset transform to new first item
+      track.style.transition = 'none';
+      centerFirstSlide();
+    }, 600); // Slightly longer than your transition duration
   }
 
-  // Center first real slide
-  setTimeout(() => {
-    centerSlide();
-    setInterval(nextSlide, 3000);
-  }, 100);
+  // Initial centering
+  setTimeout(centerFirstSlide, 100);
+
+  // Run every 3 seconds
+  setInterval(rotateQueue, 3000);
 });
