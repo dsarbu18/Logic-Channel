@@ -603,23 +603,24 @@ section {
 
 
 
-/* Carousel for mobile */
+/* Mobile Carousel */
 .client-carousel {
   display: none;
   overflow: hidden;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
   position: relative;
+  padding: 1rem 0;
 }
 
 .carousel-track {
   display: flex;
+  transition: transform 0.6s ease-in-out;
   align-items: center;
-  justify-content: center;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform; /* improves animation smoothness */
+  justify-content: flex-start;
+  gap: 40px; /* spacing between slides */
+  padding: 0 20px;
 }
 
 .carousel-slide {
@@ -627,15 +628,17 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease-in-out;
+  min-width: 100px;       /* each logo can have a width floor */
+  max-width: 150px;
+  transition: transform 0.3s ease;
 }
 
 .client-carousel img {
   max-height: 50px;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  margin: 0 20px;
-  flex-shrink: 0;
+  width: 100%;
+  object-fit: contain;
 }
 
 .client-carousel img:hover {
@@ -652,7 +655,6 @@ section {
     display: block;
   }
 }
-
 
 
 
