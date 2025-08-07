@@ -85,69 +85,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // mobile logo scroll
-document.addEventListener("DOMContentLoaded", function () {
-  const track = document.querySelector(".carousel-track");
-  const slides = document.querySelectorAll(".carousel-slide");
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.carousel-track');
+  const slides = document.querySelectorAll('.carousel-track img');
+
+  let index = 0;
   const slideCount = slides.length;
-  let currentIndex = 0;
-  let startX = 0;
-  let isDragging = false;
+  const slideWidth = slides[0].clientWidth + 32; // 32px for gap (adjust if needed)
 
-  function goToSlide(index) {
-    currentIndex = (index + slideCount) % slideCount; // Loop around
-    const offset = -currentIndex * 100;
-    track.style.transform = `translateX(${offset}%)`;
+  function moveCarousel() {
+    index++;
+    if (index >= slideCount) index = 0;
+    const offset = index * slideWidth;
+    track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Auto scroll every 4 seconds (only if mobile)
-  let autoSlideInterval;
-  function startAutoSlide() {
-    autoSlideInterval = setInterval(() => {
-      goToSlide(currentIndex + 1);
-    }, 4000);
-  }
-
-  function stopAutoSlide() {
-    clearInterval(autoSlideInterval);
-  }
-
-  if (window.innerWidth <= 768 && track) {
-    // Start auto-scrolling
-    startAutoSlide();
-
-    // Touch events for swipe
-    track.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-      stopAutoSlide();
-    });
-
-    track.addEventListener("touchmove", (e) => {
-      if (!isDragging) return;
-      const currentX = e.touches[0].clientX;
-      const diff = currentX - startX;
-
-      // Optional: you could apply drag offset here visually
-    });
-
-    track.addEventListener("touchend", (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      const endX = e.changedTouches[0].clientX;
-      const diff = endX - startX;
-
-      if (Math.abs(diff) > 50) {
-        if (diff < 0) {
-          // Swiped left
-          goToSlide(currentIndex + 1);
-        } else {
-          // Swiped right
-          goToSlide(currentIndex - 1);
-        }
-      }
-
-      startAutoSlide();
-    });
-  }
+  // Auto-slide every 3 seconds
+  setInterval(moveCarousel, 3000);
 });
-
