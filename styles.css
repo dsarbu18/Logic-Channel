@@ -22,6 +22,7 @@ body {
   width: 100%; /* Full width for small screens */
   box-sizing: border-box; /* Include padding in the total width */
   text-align: center;
+  margin: 0 auto;
 }
 
 .intro-container {
@@ -32,6 +33,7 @@ body {
   position: relative;
   margin-top: 140px; /* Move up */
   margin-bottom: 150px; /* Move down */
+  margin: 0 auto;
   opacity: 1; /* Default opacity */
   transition: opacity 0.2s ease; /* Smooth fading */
   z-index: 0;
