@@ -92,34 +92,46 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
 
-  function centerFirstSlide() {
-    const firstSlide = track.children[0];
-    const slideWidth = firstSlide.offsetWidth;
+  function centerSlide(slide) {
+    const slideWidth = slide.offsetWidth;
     const containerWidth = track.parentElement.offsetWidth;
-    const offset = firstSlide.offsetLeft - (containerWidth - slideWidth) / 2;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
     track.style.transition = 'transform 0.5s ease-in-out';
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  function rotateQueue() {
-    // Animate to center first slide
-    centerFirstSlide();
+  function shiftAndReset() {
+    // Move the first slide to the end
+    const firstSlide = track.children[0];
+    track.appendChild(firstSlide);
 
-    // After transition ends, move first slide to the end and reset position
-    setTimeout(() => {
-      const firstSlide = track.children[0];
-      track.appendChild(firstSlide);
+    // Remove transition and jump to new first slide
+    track.style.transition = 'none';
+    const newFirstSlide = track.children[0];
+    const slideWidth = newFirstSlide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = newFirstSlide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-      // Instantly reset transform to new first item
-      track.style.transition = 'none';
-      centerFirstSlide();
-    }, 600); // Slightly longer than your transition duration
+    track.style.transform = `translateX(-${offset}px)`;
+
+    // Force reflow to make sure next transition kicks in
+    void track.offsetWidth;
+
+    // Animate to center again
+    centerSlide(newFirstSlide);
   }
 
-  // Initial centering
-  setTimeout(centerFirstSlide, 100);
+  // Initial center
+  centerSlide(track.children[0]);
 
-  // Run every 3 seconds
-  setInterval(rotateQueue, 3000);
+  // Wait for the animation to finish before shifting
+  track.addEventListener('transitionend', () => {
+    shiftAndReset();
+  });
+
+  // Start animation every 3s
+  setInterval(() => {
+    centerSlide(track.children[0]);
+  }, 3000);
 });
