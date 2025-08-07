@@ -596,42 +596,41 @@ section {
   transform: scale(1.05);
 }
 
+
+
+
+
+
+
+/* Carousel for mobile */
 .client-carousel {
   display: none;
   overflow: hidden;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
+  text-align: center;
   position: relative;
 }
 
 .carousel-track {
   display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  scroll-behavior: auto;
+  transition: transform 0.5s ease-in-out;
+  align-items: center;
+  justify-content: center;
 }
 
 .client-carousel img {
   max-height: 50px;
-  margin: 0 40px;
-  flex-shrink: 0;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  margin: 0 20px;
+  flex-shrink: 0;
 }
 
 .client-carousel img:hover {
   opacity: 1;
   transform: scale(1.05);
-}
-
-@keyframes scrollLoop {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 @media (max-width: 768px) {
@@ -643,6 +642,13 @@ section {
     display: block;
   }
 }
+
+
+
+
+
+
+
 
 
 /* Ensure body takes full height */
