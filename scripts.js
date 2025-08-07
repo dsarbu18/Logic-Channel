@@ -87,8 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const slides = document.querySelectorAll('.carousel-track img');
-  const slideWidth = slides[0].clientWidth;
+  let slides = Array.from(track.children);
 
   // Clone first and last slides
   const firstClone = slides[0].cloneNode(true);
@@ -97,27 +96,35 @@ document.addEventListener('DOMContentLoaded', () => {
   track.appendChild(firstClone);
   track.insertBefore(lastClone, slides[0]);
 
-  const allSlides = document.querySelectorAll('.carousel-track img');
+  slides = Array.from(track.children); // update list
   let index = 1;
 
-  // Set starting position
-  track.style.transform = `translateX(-${slideWidth * index}px)`;
+  // Center first actual slide
+  function centerSlide() {
+    const slide = slides[index];
+    const slideWidth = slide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-  function moveCarousel() {
-    index++;
     track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${slideWidth * index}px)`;
-
-    // If at cloned last, jump back to real first
-    setTimeout(() => {
-      if (index >= allSlides.length - 1) {
-        track.style.transition = 'none';
-        index = 1;
-        track.style.transform = `translateX(-${slideWidth * index}px)`;
-      }
-    }, 500);
+    track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Auto-slide every 3 seconds
-  setInterval(moveCarousel, 3000);
+  // Initial position
+  setTimeout(centerSlide, 50);
+
+  // Slide every 3s
+  setInterval(() => {
+    index++;
+    centerSlide();
+
+    // Seamless loop after transition ends
+    setTimeout(() => {
+      if (index >= slides.length - 1) {
+        track.style.transition = 'none';
+        index = 1;
+        centerSlide();
+      }
+    }, 500);
+  }, 3000);
 });
