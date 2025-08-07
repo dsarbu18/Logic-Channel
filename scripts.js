@@ -87,37 +87,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+// Mobile logo scroll — smooth loop with cloned slides
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
+  let slides = Array.from(track.children);
 
-  function centerFirstSlide() {
-    const firstSlide = track.children[0];
-    const slideWidth = firstSlide.offsetWidth;
+  // Clone first and last slides
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
+
+  slides = Array.from(track.children); // update list with clones
+  let index = 1;
+
+  // Center the slide at current index
+  function centerSlide(transition = true) {
+    const slide = slides[index];
+    const slideWidth = slide.offsetWidth;
     const containerWidth = track.parentElement.offsetWidth;
-    const offset = firstSlide.offsetLeft - (containerWidth - slideWidth) / 2;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-    track.style.transition = 'transform 0.5s ease-in-out';
+    if (transition) {
+      track.style.transition = 'transform 0.5s ease-in-out';
+    } else {
+      track.style.transition = 'none';
+    }
+
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  function rotateQueue() {
-    // Animate to center first slide
-    centerFirstSlide();
+  // Initial position
+  window.addEventListener('load', () => {
+    centerSlide(false);
+  });
 
-    // After transition ends, move first slide to the end and reset position
+  // Slide every 3 seconds
+  setInterval(() => {
+    index++;
+    centerSlide(true);
+
+    // After transition, jump to real first slide (invisible to user)
     setTimeout(() => {
-      const firstSlide = track.children[0];
-      track.appendChild(firstSlide);
-
-      // Instantly reset transform to new first item
-      track.style.transition = 'none';
-      centerFirstSlide();
-    }, 600); // Slightly longer than your transition duration
-  }
-
-  // Initial centering
-  setTimeout(centerFirstSlide, 100);
-
-  // Run every 3 seconds
-  setInterval(rotateQueue, 3000);
+      if (index >= slides.length - 1) {
+        index = 1;
+        centerSlide(false);
+      }
+    }, 550); // Slightly longer than the transition
+  }, 3000);
 });
