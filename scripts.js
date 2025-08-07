@@ -89,35 +89,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// Seamless horizontal scroll for variable-width logos
+// mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const logos = Array.from(track.children);
+  let slides = Array.from(track.children);
 
-  // Duplicate all logos once to enable looping
-  logos.forEach(logo => {
-    const clone = logo.cloneNode(true);
-    track.appendChild(clone);
-  });
+  // Clone first and last slides
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
 
-  // Scroll settings
-  let scrollSpeed = 2; // px per frame
-  let rafId;
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
 
-  function scrollLoop() {
-    track.scrollLeft += scrollSpeed;
+  slides = Array.from(track.children); // update list
+  let index = 1;
 
-    // If we’ve reached the duplicate halfway point, reset seamlessly
-    if (track.scrollLeft >= track.scrollWidth / 2) {
-      track.scrollLeft = 0;
-    }
+  // Center first actual slide
+  function centerSlide() {
+    const slide = slides[index];
+    const slideWidth = slide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-    rafId = requestAnimationFrame(scrollLoop);
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Start scrolling after a slight delay to ensure layout is ready
-  setTimeout(() => {
-    track.scrollLeft = 0;
-    scrollLoop();
-  }, 100);
+  // Initial position
+  setTimeout(centerSlide, 50);
+
+  // Slide every 3s
+  setInterval(() => {
+    index++;
+    centerSlide();
+
+    // Seamless loop after transition ends
+    setTimeout(() => {
+      if (index >= slides.length - 1) {
+        track.style.transition = 'none';
+        index = 1;
+        centerSlide();
+      }
+    }, 500);
+  }, 3000);
 });
