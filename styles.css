@@ -518,10 +518,9 @@ section {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(2px);
   text-align: center;
-  width: 100%;
+  max-width: 100%;
   padding: 1rem 1rem;
   padding-bottom: 3%;
-  margin: auto;
   margin-bottom: 5rem;
 }
 
