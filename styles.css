@@ -603,42 +603,40 @@ section {
 
 
 
-/* Carousel for mobile */
 .client-carousel {
   display: none;
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   width: 100%;
-  max-width: 100%;
+  max-width: 150px;
   margin: 0 auto;
-  text-align: center;
-  position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track {
   display: flex;
+  gap: 20px;
+  width: max-content;
   align-items: center;
-  justify-content: center;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform; /* improves animation smoothness */
 }
 
 .carousel-slide {
+  scroll-snap-align: center;
   flex: 0 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease-in-out;
 }
 
-.client-carousel img {
+.carousel-slide img {
   max-height: 50px;
+  flex-shrink: 0;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  margin: 0 20px;
-  flex-shrink: 0;
 }
 
-.client-carousel img:hover {
+.carousel-slide img:hover {
   opacity: 1;
   transform: scale(1.05);
 }
@@ -652,7 +650,6 @@ section {
     display: block;
   }
 }
-
 
 
 
