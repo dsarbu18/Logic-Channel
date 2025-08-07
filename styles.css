@@ -12,6 +12,12 @@ body {
   line-height: 1.6;
 }
 
+@media (min-width: 768px) {
+  body {
+    background-attachment: fixed; /* Only on tablets/desktops */
+  }
+}
+
 
 .container {
   width: 100%; /* Full width for small screens */
