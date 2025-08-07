@@ -83,3 +83,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// mobile logo scroll
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.carousel-track');
+  const slides = document.querySelectorAll('.carousel-slide');
+
+  if (!track || slides.length === 0) return;
+
+  let currentSlide = 0;
+
+  function showNextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  // Only activate carousel on mobile
+  function initCarouselIfMobile() {
+    if (window.innerWidth <= 768) {
+      setInterval(showNextSlide, 3000);
+    }
+  }
+
+  initCarouselIfMobile();
+});
