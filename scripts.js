@@ -87,33 +87,18 @@ document.addEventListener("DOMContentLoaded", function () {
 // mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const slides = Array.from(track.children);
-  const slideCount = slides.length;
-  const slideWidth = slides[0].clientWidth + 32; // 32px margin-right
-
-  // Clone first slide and append to the end
-  const firstClone = slides[0].cloneNode(true);
-  track.appendChild(firstClone);
+  const slides = document.querySelectorAll('.carousel-track img');
 
   let index = 0;
+  const slideCount = slides.length;
+  const slideWidth = slides[0].clientWidth + 32; // 32px for gap (adjust if needed)
 
   function moveCarousel() {
     index++;
-    track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${index * slideWidth}px)`;
-
-    // Snap back after reaching the clone
-    if (index === slideCount) {
-      setTimeout(() => {
-        track.style.transition = 'none';
-        track.style.transform = `translateX(0px)`;
-        index = 0;
-      }, 500); // Wait for transition to finish
-    }
+    if (index >= slideCount) index = 0;
+    const offset = index * slideWidth;
+    track.style.transform = `translateX(-${offset}px)`;
   }
-
-  setInterval(moveCarousel, 3000);
-});
 
   // Auto-slide every 3 seconds
   setInterval(moveCarousel, 3000);
