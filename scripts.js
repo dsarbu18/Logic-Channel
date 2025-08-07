@@ -96,26 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let isAnimating = false;
 
   function moveSlide() {
-    if (isAnimating) return;
-    isAnimating = true;
+  if (isAnimating) return;
+  isAnimating = true;
 
-    // Slide left
-    track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${slideWidth}px)`;
+  const firstSlide = track.querySelector('.carousel-slide');
+  firstSlide.classList.add('fade-out');
 
-    // After slide finishes
-    setTimeout(() => {
-      // Move first slide to the end
-      const firstSlide = track.querySelector('.carousel-slide');
-      track.appendChild(firstSlide);
-
-      // Reset transform instantly (no animation)
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0)';
-
-      isAnimating = false;
-    }, 500);
-  }
+  setTimeout(() => {
+    firstSlide.classList.remove('fade-out');
+    track.appendChild(firstSlide);
+    isAnimating = false;
+  }, 500);
+}
 
   // Start loop
   setInterval(moveSlide, 3000);
