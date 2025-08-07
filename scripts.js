@@ -90,14 +90,64 @@ document.addEventListener("DOMContentLoaded", function () {
   const slides = document.querySelectorAll(".carousel-slide");
   const slideCount = slides.length;
   let currentIndex = 0;
+  let startX = 0;
+  let isDragging = false;
 
-  // Only run carousel on mobile view
+  function goToSlide(index) {
+    currentIndex = (index + slideCount) % slideCount; // Loop around
+    const offset = -currentIndex * 100;
+    track.style.transform = `translateX(${offset}%)`;
+  }
+
+  // Auto scroll every 4 seconds (only if mobile)
+  let autoSlideInterval;
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+      goToSlide(currentIndex + 1);
+    }, 4000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+
   if (window.innerWidth <= 768 && track) {
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % slideCount;
-      const offset = -currentIndex * 100;
-      track.style.transform = `translateX(${offset}%)`;
-    }, 4000); // change every 4 seconds
+    // Start auto-scrolling
+    startAutoSlide();
+
+    // Touch events for swipe
+    track.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      stopAutoSlide();
+    });
+
+    track.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      const currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+
+      // Optional: you could apply drag offset here visually
+    });
+
+    track.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff < 0) {
+          // Swiped left
+          goToSlide(currentIndex + 1);
+        } else {
+          // Swiped right
+          goToSlide(currentIndex - 1);
+        }
+      }
+
+      startAutoSlide();
+    });
   }
 });
 
