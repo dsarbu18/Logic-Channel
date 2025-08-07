@@ -596,13 +596,13 @@ section {
   transform: scale(1.05);
 }
 
-/* Carousel styles (hidden on desktop) */
+/* Carousel for mobile */
 .client-carousel {
   display: none;
   overflow: hidden;
-  position: relative;
-  max-width: 100%;
-  justify-content: center;
+  width: 100%;
+  max-width: 150px; /* show only one image width */
+  margin: 0 auto;
 }
 
 .carousel-track {
@@ -612,12 +612,11 @@ section {
 }
 
 .client-carousel img {
-  flex: 0 0 auto;
-  width: 150px;
+  flex: 0 0 150px;
   max-height: 50px;
-  margin: 0 auto;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  margin: 0 auto;
 }
 
 .client-carousel img:hover {
@@ -631,10 +630,9 @@ section {
   }
 
   .client-carousel {
-    display: flex;
+    display: block;
   }
 }
-
 
 
 
