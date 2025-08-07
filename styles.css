@@ -4,17 +4,16 @@ body {
   padding: 0;
   color: #333;
   background-color: #f9f9f9;
-  background: url('assets/images/background.png') no-repeat center center ;
-  background-attachment: scroll;
+  background: url('assets/images/background.png') no-repeat center center fixed;
   background-size: cover;
   margin: 0; /* Removes default margin to prevent gaps */
   scroll-behavior: smooth;
   line-height: 1.6;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 480px) {
   body {
-    background-attachment: fixed; /* Only on tablets/desktops */
+    background-attachment: scroll; /* Only on tablets/desktops */
   }
 }
 
