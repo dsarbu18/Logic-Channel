@@ -84,17 +84,38 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// mobile logo scroll
-// Mobile logo scroll - seamless continuous loop
+// Seamless horizontal scroll for variable-width logos
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
   const logos = Array.from(track.children);
 
-  // Duplicate all logos to create an endless loop
-  logos.forEach((logo) => {
+  // Duplicate all logos once to enable looping
+  logos.forEach(logo => {
     const clone = logo.cloneNode(true);
     track.appendChild(clone);
   });
+
+  // Scroll settings
+  let scrollSpeed = 0.5; // px per frame
+  let rafId;
+
+  function scrollLoop() {
+    track.scrollLeft += scrollSpeed;
+
+    // If we’ve reached the duplicate halfway point, reset seamlessly
+    if (track.scrollLeft >= track.scrollWidth / 2) {
+      track.scrollLeft = 0;
+    }
+
+    rafId = requestAnimationFrame(scrollLoop);
+  }
+
+  // Start scrolling after a slight delay to ensure layout is ready
+  setTimeout(() => {
+    track.scrollLeft = 0;
+    scrollLoop();
+  }, 100);
+});
 
   // Start the continuous animation via CSS (handled in styles)
   track.style.animation = 'scrollLoop 20s linear infinite';
