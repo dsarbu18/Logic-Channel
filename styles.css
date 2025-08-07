@@ -536,7 +536,7 @@ section {
   text-align: center;
   max-width: 100%;
   padding: 1rem 1rem;
-  padding-bottom: 3%;
+  padding-bottom: 2rem;
   margin-bottom: 5rem;
 }
 
@@ -567,7 +567,7 @@ section {
 
 @media (max-width: 768px) {
   .client-heading {
-    font-size: 1.4rem; /* smaller for mobile */
+    font-size: 1.2rem; /* smaller for mobile */
     line-height: 1.2;  /* optional: tighter vertical spacing */
   }
 }
