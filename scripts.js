@@ -90,33 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const track = document.querySelector('.carousel-track');
-  let slides = Array.from(track.children);
-  let scrollSpeed = 0.5; // pixels per frame
-  let animationFrameId;
+  const container = document.querySelector('.client-carousel');
+  const slides = document.querySelectorAll('.carousel-slide');
+  const slideWidth = slides[0].offsetWidth + 20; // includes gap
 
-  function scrollLoop() {
-    track.scrollLeft += scrollSpeed;
+  let index = 0;
 
-    // When first slide is fully out of view, move it to the end
-    const firstSlide = slides[0];
-    const firstSlideRightEdge = firstSlide.offsetLeft + firstSlide.offsetWidth;
+  setInterval(() => {
+    index++;
 
-    if (track.scrollLeft >= firstSlideRightEdge) {
-      // Remove first slide and move it to the end
-      track.appendChild(firstSlide);
-      slides.push(slides.shift());
-
-      // Adjust scrollLeft to account for moved slide
-      track.scrollLeft -= firstSlide.offsetWidth;
+    if (index >= slides.length) {
+      index = 0;
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: slideWidth, behavior: 'smooth' });
     }
-
-    animationFrameId = requestAnimationFrame(scrollLoop);
-  }
-
-  // Start after layout is ready
-  setTimeout(() => {
-    track.scrollLeft = 0;
-    scrollLoop();
-  }, 100);
+  }, 3000);
 });
