@@ -39,6 +39,7 @@ body {
 .intro-container {
   width: 100%; /* Full width for small screens */
   margin: 0 auto; /* Center the container horizontally */
+  max-width: 1200px;
   padding: 0 15px; /* Add horizontal padding to avoid edge overflow */
   box-sizing: border-box; 
   text-align: left;
