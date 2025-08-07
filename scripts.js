@@ -89,21 +89,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.client-carousel');
-  const slides = document.querySelectorAll('.carousel-slide');
-  const slideWidth = slides[0].offsetWidth + 20; // includes gap
+  const track = document.querySelector('.carousel-track');
+  let slides = Array.from(track.children);
 
-  let index = 0;
+  // Clone first and last slides
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
 
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
+
+  slides = Array.from(track.children); // update list
+  let index = 1;
+
+  // Center first actual slide
+  function centerSlide() {
+    const slide = slides[index];
+    const slideWidth = slide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
+
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-${offset}px)`;
+  }
+
+  // Initial position
+  setTimeout(centerSlide, 50);
+
+  // Slide every 3s
   setInterval(() => {
     index++;
+    centerSlide();
 
-    if (index >= slides.length) {
-      index = 0;
-      container.scrollTo({ left: 0, behavior: 'smooth' });
-    } else {
-      container.scrollBy({ left: slideWidth, behavior: 'smooth' });
-    }
+    // Seamless loop after transition ends
+    setTimeout(() => {
+      if (index >= slides.length - 1) {
+        track.style.transition = 'none';
+        index = 1;
+        centerSlide();
+      }
+    }, 500);
   }, 3000);
 });
