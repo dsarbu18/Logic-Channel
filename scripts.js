@@ -88,53 +88,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// Mobile logo scroll — smooth loop with cloned slides
+
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  let slides = Array.from(track.children);
+  const originalSlides = Array.from(track.children);
+  const totalOriginal = originalSlides.length;
 
-  // Clone first and last slides
-  const firstClone = slides[0].cloneNode(true);
-  const lastClone = slides[slides.length - 1].cloneNode(true);
+  // Clone all slides and append them
+  originalSlides.forEach(slide => {
+    const clone = slide.cloneNode(true);
+    track.appendChild(clone);
+  });
 
-  track.appendChild(firstClone);
-  track.insertBefore(lastClone, slides[0]);
+  const allSlides = Array.from(track.children);
+  let index = 0;
 
-  slides = Array.from(track.children); // update list with clones
-  let index = 1;
-
-  // Center the slide at current index
-  function centerSlide(transition = true) {
-    const slide = slides[index];
+  function centerSlide() {
+    const slide = allSlides[index];
     const slideWidth = slide.offsetWidth;
     const containerWidth = track.parentElement.offsetWidth;
     const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-    if (transition) {
-      track.style.transition = 'transform 0.5s ease-in-out';
-    } else {
-      track.style.transition = 'none';
-    }
-
+    track.style.transition = 'transform 0.5s ease-in-out';
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Initial position
-  window.addEventListener('load', () => {
-    centerSlide(false);
-  });
-
-  // Slide every 3 seconds
-  setInterval(() => {
+  function nextSlide() {
     index++;
-    centerSlide(true);
+    centerSlide();
 
-    // After transition, jump to real first slide (invisible to user)
+    // When we've reached the last real + clone slide, reset to index 0
     setTimeout(() => {
-      if (index >= slides.length - 1) {
-        index = 1;
-        centerSlide(false);
+      if (index >= totalOriginal) {
+        track.style.transition = 'none';
+        index = 0;
+        centerSlide();
+
+        // Re-enable transition for the next move
+        setTimeout(() => {
+          track.style.transition = 'transform 0.5s ease-in-out';
+        }, 50);
       }
-    }, 550); // Slightly longer than the transition
-  }, 3000);
+    }, 550);
+  }
+
+  // Center first real slide
+  setTimeout(() => {
+    centerSlide();
+    setInterval(nextSlide, 3000);
+  }, 100);
 });
