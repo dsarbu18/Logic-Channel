@@ -85,25 +85,16 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // mobile logo scroll
-document.addEventListener('DOMContentLoaded', () => {
+let currentSlide = 0;
+
+function showNextSlide() {
   const track = document.querySelector('.carousel-track');
-  const slides = document.querySelectorAll('.carousel-slide');
+  if (!track) return;
 
-  if (!track || slides.length === 0) return;
+  currentSlide = (currentSlide + 1) % 3;
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
 
-  let currentSlide = 0;
-
-  function showNextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  // Only activate carousel on mobile
-  function initCarouselIfMobile() {
-    if (window.innerWidth <= 768) {
-      setInterval(showNextSlide, 3000);
-    }
-  }
-
-  initCarouselIfMobile();
-});
+if (window.innerWidth <= 768) {
+  setInterval(showNextSlide, 3000); // every 3 seconds
+}
