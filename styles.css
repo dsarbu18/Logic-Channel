@@ -604,48 +604,29 @@ section {
 
 
 
-/* Carousel for mobile */
+/* Carousel (Mobile only) */
 .client-carousel {
-  display: none;
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
+  display: none;
 }
-
 .carousel-track {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform; /* improves animation smoothness */
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
-
 .carousel-slide {
-  flex: 0 0 auto;
+  min-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease-in-out;
-  transition: opacity 0.5s ease;
-  opacity: 1;
 }
-
-.carousel-slide.fade-out {
-  opacity: 0;
-}
-
-.client-carousel img {
+.carousel-slide img {
   max-height: 50px;
   opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  margin: 0 20px;
-  flex-shrink: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
-
-.client-carousel img:hover {
+.carousel-slide img:hover {
   opacity: 1;
   transform: scale(1.05);
 }
@@ -654,7 +635,6 @@ section {
   .client-logos {
     display: none;
   }
-
   .client-carousel {
     display: block;
   }
