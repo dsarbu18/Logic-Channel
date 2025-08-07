@@ -596,39 +596,41 @@ section {
   transform: scale(1.05);
 }
 
+/* Carousel styles (hidden on desktop) */
 .client-carousel {
   display: none;
+  overflow: hidden;
+  position: relative;
 }
 
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.client-carousel img {
+  flex: 0 0 auto;
+  max-height: 50px;
+  width: auto;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.client-carousel img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Responsive behavior */
 @media (max-width: 768px) {
+  .client-logos {
+    display: none;
+  }
+
   .client-carousel {
     display: block;
-    width: 100%;
-    overflow: hidden;
-    margin-top: 2rem;
-  }
-
-  .carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 300%; /* 3 slides */
-  }
-
-  .carousel-slide {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .carousel-slide img {
-    max-height: 60px;
-    opacity: 0.9;
-    transition: transform 0.3s ease;
-  }
-
-  .client-logos {
-    display: none; /* hide desktop version on mobile */
   }
 }
 
