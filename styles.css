@@ -565,6 +565,13 @@ section {
   transition: background-position 1s ease;
 }
 
+@media (max-width: 768px) {
+  .client-heading {
+    font-size: 1.4rem; /* smaller for mobile */
+    line-height: 1.2;  /* optional: tighter vertical spacing */
+  }
+}
+
 .client-heading.shine {
   animation: shineEffect 2s ease forwards;
 }
