@@ -89,38 +89,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// mobile logo scroll (FIFO version)
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
   let slides = Array.from(track.children);
+  let scrollSpeed = 0.5; // pixels per frame
+  let animationFrameId;
 
-  // Initial centering
-  function centerSlide() {
-    const slide = slides[0]; // always center the first slide
-    const slideWidth = slide.offsetWidth;
-    const containerWidth = track.parentElement.offsetWidth;
-    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
+  function scrollLoop() {
+    track.scrollLeft += scrollSpeed;
 
-    track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${offset}px)`;
+    // When first slide is fully out of view, move it to the end
+    const firstSlide = slides[0];
+    const firstSlideRightEdge = firstSlide.offsetLeft + firstSlide.offsetWidth;
+
+    if (track.scrollLeft >= firstSlideRightEdge) {
+      // Remove first slide and move it to the end
+      track.appendChild(firstSlide);
+      slides.push(slides.shift());
+
+      // Adjust scrollLeft to account for moved slide
+      track.scrollLeft -= firstSlide.offsetWidth;
+    }
+
+    animationFrameId = requestAnimationFrame(scrollLoop);
   }
 
-  // Initial position
-  setTimeout(centerSlide, 50);
-
-  // Slide every 3s with FIFO behavior
-  setInterval(() => {
-    centerSlide();
-
-    // After transition ends, move first slide to end
-    setTimeout(() => {
-      const firstSlide = slides.shift();
-      track.appendChild(firstSlide);
-      slides.push(firstSlide);
-
-      // Reset transform with no transition
-      track.style.transition = 'none';
-      centerSlide();
-    }, 500);
-  }, 3000);
+  // Start after layout is ready
+  setTimeout(() => {
+    track.scrollLeft = 0;
+    scrollLoop();
+  }, 100);
 });
