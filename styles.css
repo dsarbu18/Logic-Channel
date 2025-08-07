@@ -601,19 +601,21 @@ section {
   display: none;
   overflow: hidden;
   position: relative;
+  max-width: 100%;
+  justify-content: center;
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.3s ease-in-out;
-  gap: 2rem;
-  padding: 0 1rem;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
 }
 
 .client-carousel img {
   flex: 0 0 auto;
+  width: 150px;
   max-height: 50px;
-  width: auto;
+  margin: 0 auto;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -623,17 +625,15 @@ section {
   transform: scale(1.05);
 }
 
-/* Responsive behavior */
 @media (max-width: 768px) {
   .client-logos {
     display: none;
   }
 
   .client-carousel {
-    display: block;
+    display: flex;
   }
 }
-
 
 
 
