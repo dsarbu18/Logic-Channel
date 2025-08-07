@@ -88,31 +88,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const originalSlides = Array.from(track.children);
+  let slides = Array.from(track.children);
 
-  // Duplicate all logos for smooth loop
-  originalSlides.forEach(slide => {
-    track.appendChild(slide.cloneNode(true));
-  });
+  // Clone first and last slides
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
 
-  let scrollSpeed = 1.5; // px per frame
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
 
-  function scrollLoop() {
-    track.scrollLeft += scrollSpeed;
+  slides = Array.from(track.children); // update list
+  let index = 1;
 
-    // When halfway through the duplicated set, reset seamlessly
-    if (track.scrollLeft >= track.scrollWidth / 2) {
-      track.scrollLeft = 0;
-    }
+  // Center first actual slide
+  function centerSlide() {
+    const slide = slides[index];
+    const slideWidth = slide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
-    requestAnimationFrame(scrollLoop);
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Start scrolling
-  setTimeout(() => {
-    track.scrollLeft = 0;
-    requestAnimationFrame(scrollLoop);
-  }, 100);
+  // Initial position
+  setTimeout(centerSlide, 50);
+
+  // Slide every 3s
+  setInterval(() => {
+    index++;
+    centerSlide();
+
+    // Seamless loop after transition ends
+    setTimeout(() => {
+      if (index >= slides.length - 1) {
+        track.style.transition = 'none';
+        index = 1;
+        centerSlide();
+      }
+    }, 500);
+  }, 3000);
 });
