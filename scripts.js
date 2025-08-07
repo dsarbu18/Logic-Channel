@@ -89,26 +89,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// mobile logo scroll (FIFO version)
 document.addEventListener('DOMContentLoaded', () => {
-  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-  let index = 0;
+  const track = document.querySelector('.carousel-track');
+  let slides = Array.from(track.children);
 
-  // Initial setup
-  slides[index].classList.add('active');
+  // Initial centering
+  function centerSlide() {
+    const slide = slides[0]; // always center the first slide
+    const slideWidth = slide.offsetWidth;
+    const containerWidth = track.parentElement.offsetWidth;
+    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
 
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-${offset}px)`;
+  }
+
+  // Initial position
+  setTimeout(centerSlide, 50);
+
+  // Slide every 3s with FIFO behavior
   setInterval(() => {
-    // Remove current active class
-    slides[index].classList.remove('active');
+    centerSlide();
 
-    // Move the first slide to the end (FIFO queue)
-    const track = slides[index].parentElement;
-    track.appendChild(slides[index]);
+    // After transition ends, move first slide to end
+    setTimeout(() => {
+      const firstSlide = slides.shift();
+      track.appendChild(firstSlide);
+      slides.push(firstSlide);
 
-    // Rebuild slides array (since DOM changed)
-    slides.push(slides.shift()); // rotate queue
-    index = 0;
-
-    // Add active to new first logo
-    slides[index].classList.add('active');
+      // Reset transform with no transition
+      track.style.transition = 'none';
+      centerSlide();
+    }, 500);
   }, 3000);
 });
