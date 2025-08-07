@@ -4,8 +4,9 @@ body {
   padding: 0;
   color: #333;
   background-color: #f9f9f9;
-  background: url('assets/images/background.png') no-repeat center center fixed;
-  background-size: cover; /* Ensures the background image covers the entire viewport */
+  background: url('assets/images/background.png') no-repeat center center ;
+  background-attachment: scroll;
+  background-size: cover;
   margin: 0; /* Removes default margin to prevent gaps */
   scroll-behavior: smooth;
   line-height: 1.6;
