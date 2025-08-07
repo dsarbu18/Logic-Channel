@@ -89,47 +89,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  let slides = Array.from(track.children);
+  const originalLogos = Array.from(track.children);
 
-  // Clone first and last slides
-  const firstClone = slides[0].cloneNode(true);
-  const lastClone = slides[slides.length - 1].cloneNode(true);
+  // Clone all logos once for smooth looping
+  originalLogos.forEach(logo => {
+    const clone = logo.cloneNode(true);
+    track.appendChild(clone);
+  });
 
-  track.appendChild(firstClone);
-  track.insertBefore(lastClone, slides[0]);
+  let scrollSpeed = 1.5; // pixels per frame (adjust to your liking)
 
-  slides = Array.from(track.children); // update list
-  let index = 1;
+  function scroll() {
+    track.scrollLeft += scrollSpeed;
 
-  // Center first actual slide
-  function centerSlide() {
-    const slide = slides[index];
-    const slideWidth = slide.offsetWidth;
-    const containerWidth = track.parentElement.offsetWidth;
-    const offset = slide.offsetLeft - (containerWidth - slideWidth) / 2;
+    // Reset scrollLeft seamlessly
+    if (track.scrollLeft >= track.scrollWidth / 2) {
+      track.scrollLeft = 0;
+    }
 
-    track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${offset}px)`;
+    requestAnimationFrame(scroll);
   }
 
-  // Initial position
-  setTimeout(centerSlide, 50);
-
-  // Slide every 3s
-  setInterval(() => {
-    index++;
-    centerSlide();
-
-    // Seamless loop after transition ends
-    setTimeout(() => {
-      if (index >= slides.length - 1) {
-        track.style.transition = 'none';
-        index = 1;
-        centerSlide();
-      }
-    }, 500);
-  }, 3000);
+  // Kick off scrolling after layout is ready
+  setTimeout(() => {
+    track.scrollLeft = 0;
+    requestAnimationFrame(scroll);
+  }, 100);
 });
