@@ -92,23 +92,27 @@ document.addEventListener("DOMContentLoaded", function () {
 // mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const slideWidth = track.querySelector('.carousel-slide').offsetWidth;
+  let index = 0;
   let isAnimating = false;
 
   function moveSlide() {
-  if (isAnimating) return;
-  isAnimating = true;
+    if (isAnimating) return;
+    isAnimating = true;
 
-  const firstSlide = track.querySelector('.carousel-slide');
-  firstSlide.classList.add('fade-out');
+    track.style.transition = 'transform 0.5s ease-in-out';
+    track.style.transform = `translateX(-100%)`;
 
-  setTimeout(() => {
-    firstSlide.classList.remove('fade-out');
-    track.appendChild(firstSlide);
-    isAnimating = false;
-  }, 500);
-}
+    setTimeout(() => {
+      const firstSlide = track.children[0];
+      track.appendChild(firstSlide);
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0)';
 
-  // Start loop
+      // Force reflow so next transition is smooth
+      void track.offsetWidth;
+      isAnimating = false;
+    }, 500);
+  }
+
   setInterval(moveSlide, 3000);
 });
