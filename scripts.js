@@ -88,33 +88,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
-  const originalLogos = Array.from(track.children);
+  const originalSlides = Array.from(track.children);
 
-  // Clone all logos once for smooth looping
-  originalLogos.forEach(logo => {
-    const clone = logo.cloneNode(true);
-    track.appendChild(clone);
+  // Duplicate all logos for smooth loop
+  originalSlides.forEach(slide => {
+    track.appendChild(slide.cloneNode(true));
   });
 
-  let scrollSpeed = 1.5; // pixels per frame (adjust to your liking)
+  let scrollSpeed = 1.5; // px per frame
 
-  function scroll() {
+  function scrollLoop() {
     track.scrollLeft += scrollSpeed;
 
-    // Reset scrollLeft seamlessly
+    // When halfway through the duplicated set, reset seamlessly
     if (track.scrollLeft >= track.scrollWidth / 2) {
       track.scrollLeft = 0;
     }
 
-    requestAnimationFrame(scroll);
+    requestAnimationFrame(scrollLoop);
   }
 
-  // Kick off scrolling after layout is ready
+  // Start scrolling
   setTimeout(() => {
     track.scrollLeft = 0;
-    requestAnimationFrame(scroll);
+    requestAnimationFrame(scrollLoop);
   }, 100);
 });
