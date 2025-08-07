@@ -90,36 +90,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const track = document.querySelector('.carousel-track');
+  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+  let index = 0;
 
-  function centerFirstSlide() {
-    const firstSlide = track.children[0];
-    const slideWidth = firstSlide.offsetWidth;
-    const containerWidth = track.parentElement.offsetWidth;
-    const offset = firstSlide.offsetLeft - (containerWidth - slideWidth) / 2;
+  // Initial setup
+  slides[index].classList.add('active');
 
-    track.style.transition = 'transform 0.5s ease-in-out';
-    track.style.transform = `translateX(-${offset}px)`;
-  }
+  setInterval(() => {
+    // Remove current active class
+    slides[index].classList.remove('active');
 
-  function rotateQueue() {
-    // Animate to center first slide
-    centerFirstSlide();
+    // Move the first slide to the end (FIFO queue)
+    const track = slides[index].parentElement;
+    track.appendChild(slides[index]);
 
-    // After transition ends, move first slide to the end and reset position
-    setTimeout(() => {
-      const firstSlide = track.children[0];
-      track.appendChild(firstSlide);
+    // Rebuild slides array (since DOM changed)
+    slides.push(slides.shift()); // rotate queue
+    index = 0;
 
-      // Instantly reset transform to new first item
-      track.style.transition = 'none';
-      centerFirstSlide();
-    }, 600); // Slightly longer than your transition duration
-  }
-
-  // Initial centering
-  setTimeout(centerFirstSlide, 100);
-
-  // Run every 3 seconds
-  setInterval(rotateQueue, 3000);
+    // Add active to new first logo
+    slides[index].classList.add('active');
+  }, 3000);
 });
