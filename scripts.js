@@ -88,22 +88,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// mobile logo scroll
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
   let slides = Array.from(track.children);
 
-  // Clone first and last slides
+  // Clone first and last slide
   const firstClone = slides[0].cloneNode(true);
   const lastClone = slides[slides.length - 1].cloneNode(true);
-
   track.appendChild(firstClone);
   track.insertBefore(lastClone, slides[0]);
 
-  slides = Array.from(track.children); // update list
+  slides = Array.from(track.children);
   let index = 1;
 
-  // Center first actual slide
+  // Center the slide
   function centerSlide() {
     const slide = slides[index];
     const slideWidth = slide.offsetWidth;
@@ -115,14 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initial position
-  setTimeout(centerSlide, 50);
+  setTimeout(centerSlide, 100);
 
-  // Slide every 3s
+  // Auto-slide
   setInterval(() => {
     index++;
     centerSlide();
 
-    // Seamless loop after transition ends
     setTimeout(() => {
       if (index >= slides.length - 1) {
         track.style.transition = 'none';
