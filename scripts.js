@@ -88,22 +88,19 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', () => {
   const track = document.querySelector('.carousel-track');
   const slides = document.querySelectorAll('.carousel-track img');
-  const slideCount = slides.length;
-
   const slideWidth = slides[0].clientWidth;
-  let index = 1;
 
-  // Clone first and last slide for seamless loop
+  // Clone first and last slides
   const firstClone = slides[0].cloneNode(true);
-  const lastClone = slides[slideCount - 1].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
 
   track.appendChild(firstClone);
   track.insertBefore(lastClone, slides[0]);
 
-  const updatedSlides = document.querySelectorAll('.carousel-track img');
-  const totalSlides = updatedSlides.length;
+  const allSlides = document.querySelectorAll('.carousel-track img');
+  let index = 1;
 
-  // Set initial position to the first actual slide
+  // Set starting position
   track.style.transform = `translateX(-${slideWidth * index}px)`;
 
   function moveCarousel() {
@@ -111,19 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
     track.style.transition = 'transform 0.5s ease-in-out';
     track.style.transform = `translateX(-${slideWidth * index}px)`;
 
-    // Reset to first slide (without transition) once the clone is reached
+    // If at cloned last, jump back to real first
     setTimeout(() => {
-      if (index >= totalSlides - 1) {
-        index = 1;
+      if (index >= allSlides.length - 1) {
         track.style.transition = 'none';
+        index = 1;
         track.style.transform = `translateX(-${slideWidth * index}px)`;
       }
     }, 500);
   }
-
-  // Auto-slide every 3 seconds
-  setInterval(moveCarousel, 3000);
-});
 
   // Auto-slide every 3 seconds
   setInterval(moveCarousel, 3000);
