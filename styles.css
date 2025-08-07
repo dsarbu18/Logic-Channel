@@ -601,37 +601,35 @@ section {
 
 
 
-
-/* Carousel for mobile */
 .client-carousel {
   display: none;
   overflow: hidden;
   width: 100%;
-  max-width: 150px; /* Controls visible logo width */
+  max-width: 150px; /* visible window */
   margin: 0 auto;
-  text-align: center;
   position: relative;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  align-items: center;
-  justify-content: flex-start;
   will-change: transform;
 }
 
-.client-carousel img {
-  width: 100%;                /* Stretch to fill container */
+.carousel-slide {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-slide img {
   max-height: 50px;
   opacity: 0.7;
-  margin: 0;                  /* Remove gaps */
-  flex-shrink: 0;
-  object-fit: contain;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.client-carousel img:hover {
+.carousel-slide img:hover {
   opacity: 1;
   transform: scale(1.05);
 }
