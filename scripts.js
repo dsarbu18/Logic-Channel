@@ -85,16 +85,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // mobile logo scroll
-document.addEventListener('DOMContentLoaded', () => {
-  const track = document.querySelector('.carousel-track');
-  if (!track) return;
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.querySelector(".carousel-track");
+  const slides = document.querySelectorAll(".carousel-slide");
+  const slideCount = slides.length;
+  let currentIndex = 0;
 
-  let currentSlide = 0;
-  const totalSlides = document.querySelectorAll('.carousel-slide').length;
-
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }, 6000); // Change slides every 6 seconds
+  // Only run carousel on mobile view
+  if (window.innerWidth <= 768 && track) {
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slideCount;
+      const offset = -currentIndex * 100;
+      track.style.transform = `translateX(${offset}%)`;
+    }, 4000); // change every 4 seconds
+  }
 });
 
