@@ -596,7 +596,6 @@ section {
   transform: scale(1.05);
 }
 
-/* Carousel for mobile */
 .client-carousel {
   display: none;
   overflow: hidden;
@@ -608,9 +607,9 @@ section {
 
 .carousel-track {
   display: flex;
-  align-items: center;
-  animation: scrollLoop 20s linear infinite;
-  will-change: transform;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  scroll-behavior: auto;
 }
 
 .client-carousel img {
