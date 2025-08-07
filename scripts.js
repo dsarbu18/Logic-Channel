@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Scroll settings
-  let scrollSpeed = 0.5; // px per frame
+  let scrollSpeed = 1; // px per frame
   let rafId;
 
   function scrollLoop() {
